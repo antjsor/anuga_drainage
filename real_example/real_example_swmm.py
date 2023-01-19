@@ -123,8 +123,6 @@ if do_data_save:
     cumulative_inlet_flooding = np.array(n_in_nodes*[0.0])
     cumulative_inlet_flow     = np.array(n_in_nodes*[0.0])
 
-system_routing = SystemStats(sim)
-
 
 wall_clock_start = time.perf_counter()
 sim.start()
@@ -135,7 +133,6 @@ for t in domain.evolve(yieldstep=dt, finaltime=ft):
     anuga_depths = np.array([inlet_operators[in_id].inlet.get_average_depth() for in_id in in_node_ids])
 
     if domain.yieldstep_counter%output_frequency == 0 and do_print:
-        print(f'External flow: {system_routing.routing_stats["external_inflow"]}')
         print('t = ',t)
 
     # Reset link volume at every iteration and sum volumes
@@ -154,7 +151,7 @@ for t in domain.evolve(yieldstep=dt, finaltime=ft):
 
     if do_data_save:
         Q_ins.append(Q_in.copy())
-        node_heads.append(inlet_head_swmm)
+        node_heads.append(inlet_head_swmm.copy())
 
     if domain.yieldstep_counter%output_frequency == 0 and do_print:
         print(f'Q_in = {Q_in}')
@@ -172,7 +169,7 @@ for t in domain.evolve(yieldstep=dt, finaltime=ft):
     ### Compute inlet flow using volumes
     inlet_vol     = [- node.statistics['lateral_infow_vol'] + node.statistics['flooding_volume'] for node in Nodes(sim) if node.is_junction()]
     inlet_flow    = [(new_vol - old_vol)/dt for new_vol,old_vol in zip(inlet_vol,old_inlet_vol)]
-    old_inlet_vol = inlet_vol
+    old_inlet_vol = inlet_vol.copy()
 
     # Compute statistics and append data
     inlet_idx = 0
@@ -187,8 +184,8 @@ for t in domain.evolve(yieldstep=dt, finaltime=ft):
     domain_volume        = domain.get_water_volume()
     sewer_volume         = link_volume + node_volume
     boundary_flow        = domain.get_boundary_flux_integral()
-    total_volume_correct = t*input_rate + boundary_flow + link_volume_0
-    total_volume_real    = domain_volume + sewer_volume + outfall_vol
+    total_volume_correct = t*input_rate + boundary_flow + link_volume_0 - outfall_vol
+    total_volume_real    = domain_volume + sewer_volume 
 
     loss = total_volume_real - total_volume_correct
     losses.append(loss)

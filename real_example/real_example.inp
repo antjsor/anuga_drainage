@@ -48,10 +48,10 @@ DRY_ONLY         NO
 [JUNCTIONS]
 ;;Name           Elevation  MaxDepth   InitDepth  SurDepth   Aponded   
 ;;-------------- ---------- ---------- ---------- ---------- ----------
-Inlet_1          37.5       0          0          0          0.19635   
-Inlet_2          36.4       0          0          0          0.19635   
-Inlet_3          34.5       0          0          0          0.19635   
-Inlet_4          33.4       0          0          0          0.19635   
+Inlet_1          37.5       1.1          0          0.15          0    
+Inlet_2          36.4       1.1          0          0.15          0   
+Inlet_3          34.5       1.13         0          0.15          0   
+Inlet_4          33.4       1.1          0          0.15          0   
 
 [OUTFALLS]
 ;;Name           Elevation  Type       Stage Data       Gated    Route To        

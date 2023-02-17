@@ -2,3 +2,5 @@
 *.pyc
 *.out
 *.rpt
+*.png
+*.eps

@@ -18,6 +18,8 @@ import time
 from coupling_functions.inlet_initialization import initialize_inlets
 from coupling_functions.coupling import calculate_Q
 
+from coupling_functions.coupling import calculate_Q_v2
+
 time_average = 10 # sec
 dt           = 1.0     # yield step
 ft           = 100 # final timestep
@@ -29,7 +31,7 @@ from pyswmm import SystemStats
 
 output_frequency = 1
 do_print         = True
-do_data_save     = False
+do_data_save     = True
 
 basename = 'model/terrain'
 inp_name = 'real_example.inp'
@@ -147,8 +149,10 @@ for t in domain.evolve(yieldstep=dt, finaltime=ft):
         conduit_depths.append(np.array([link.depth for link in Links(sim)]))
 
     inlet_head_swmm   = np.array([node.head for node in Nodes(sim) if node.is_junction()])
-
     Q_in     = calculate_Q(inlet_head_swmm, anuga_depths, inlet_elevation, inlet_weir_length, inlet_area) # inputs between manual and auto checked to be the same 20/09
+
+    # inlet_volumes = [inlet_operators[nodeid].inlet.get_total_water_volume() for nodeid in in_node_ids]
+    # Q_in = 1.0 * calculate_Q_v2(inlet_head_swmm, anuga_depths, inlet_elevation, inlet_weir_length, inlet_area, inlet_volumes, dt, cw = 0.67, co = 0.67)
     Q_in     = ((time_average - dt)*Q_in_old + dt*Q_in)/time_average
     Q_in_old = Q_in.copy()
 
@@ -160,6 +164,7 @@ for t in domain.evolve(yieldstep=dt, finaltime=ft):
         print(f'Q_in = {Q_in}')
 
     # Simulate sewer with flow input
+    #TODO this zip is not same length
     for node, Qin in zip(Nodes(sim), Q_in): 
         node.generated_inflow(Qin)
 
@@ -215,3 +220,5 @@ if do_data_save:
 
     with open(pick, "wb") as f:
         pickle.dump(data, f)
+
+plt.plot(times,Q_ins)

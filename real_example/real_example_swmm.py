@@ -192,8 +192,8 @@ for t in domain.evolve(yieldstep=dt, finaltime=ft):
     domain_volume        = domain.get_water_volume()
     sewer_volume         = link_volume + node_volume
     boundary_flow        = domain.get_boundary_flux_integral()
-    total_volume_correct = t*input_rate + boundary_flow + link_volume_0
-    total_volume_real    = domain_volume + sewer_volume + outfall_vol
+    total_volume_correct = t*input_rate + boundary_flow + link_volume_0 - outfall_vol
+    total_volume_real    = domain_volume + sewer_volume
 
     loss = total_volume_real - total_volume_correct
     losses.append(loss)

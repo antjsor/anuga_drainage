@@ -51,9 +51,9 @@ DRY_ONLY         NO
 ;;Name           Elevation  MaxDepth   InitDepth  SurDepth   Aponded   
 ;;-------------- ---------- ---------- ---------- ---------- ----------
 Inlet1           0.07       1.0        0          0.15       1         
-Outlet           0.03       1.0        0          0.15       1         
 Inlet2           0.06       1          0          0.15       1         
 Inlet3           0.04       1          0          0.15       1         
+Outlet           0.03       1.0        0          0.15       1         
 
 [OUTFALLS]
 ;;Name           Elevation  Type       Stage Data       Gated    Route To        
@@ -63,10 +63,10 @@ Outfall          0.02       FREE                        NO
 [CONDUITS]
 ;;Name           From Node        To Node          Length     Roughness  InOffset   OutOffset  InitFlow   MaxFlow   
 ;;-------------- ---------------- ---------------- ---------- ---------- ---------- ---------- ---------- ----------
-Outpipe          Outlet           Outfall          5.0        0.013      0          0          0          10        
 Conduit1         Inlet1           Inlet2           10         0.01       0          0          0          0         
 Conduit2         Inlet2           Inlet3           20         0.01       0          0          0          0         
-Conduit3         Inlet3           Outlet           10         0.01       0          0          0          0         
+Conduit3         Inlet3           Outlet           10         0.01       0          0          0          0      
+Outpipe          Outlet           Outfall          10.0        0.013      0          0          0          10           
 
 [XSECTIONS]
 ;;Link           Shape        Geom1            Geom2      Geom3      Geom4      Barrels    Culvert   
@@ -80,6 +80,8 @@ Conduit3         CIRCULAR     1                0          0          0          
 ;;Node           Constituent      Time Series      Type     Mfactor  Sfactor  Baseline Pattern
 ;;-------------- ---------------- ---------------- -------- -------- -------- -------- --------
 Inlet1           FLOW             ""               FLOW     1.0      1.0      0.0    
+Inlet2           FLOW             ""               FLOW     1.0      1.0      0.0    
+Inlet3           FLOW             ""               FLOW     1.0      1.0      0.0    
 Outlet           FLOW             ""               FLOW     1.0      1.0      0.0      
 
 [REPORT]

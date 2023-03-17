@@ -72,7 +72,15 @@ Conduit_4        Inlet_4          Outfall_1        24         0.013      0      
 Conduit_1        CIRCULAR     0.375            0          0          0          1                    
 Conduit_2        CIRCULAR     0.375            0          0          0          1                    
 Conduit_3        CIRCULAR     0.375            0          0          0          1                    
-Conduit_4        CIRCULAR     0.45             0          0          0          1                    
+Conduit_4        CIRCULAR     0.45             0          0          0          1             
+
+[INFLOWS]
+;;Node           Constituent      Time Series      Type     Mfactor  Sfactor  Baseline Pattern
+;;-------------- ---------------- ---------------- -------- -------- -------- -------- --------
+Inlet_1          FLOW             ""               FLOW     1.0      1.0      0.0
+Inlet_2          FLOW             ""               FLOW     1.0      1.0      0.0      
+Inlet_3          FLOW             ""               FLOW     1.0      1.0      0.0      
+Inlet_4          FLOW             ""               FLOW     1.0      1.0      0.0          
 
 [REPORT]
 ;;Reporting Options

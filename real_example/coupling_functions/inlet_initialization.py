@@ -8,6 +8,7 @@ def n_sided_inlet(n_sides, area, inlet_coordinate, rotation):
     # Computes the vertex coordinates and side length of a regular polygon with:
     # Number of sides = n_sides
     # Area = area
+    #TODO Would it be more sensible to smaple points along circle and just use paramters for desired circle areas in weir/orifice equations?
     if n_sides < 3:
         raise RuntimeError('A polygon should have at least 3 sides')
 
@@ -26,7 +27,13 @@ def n_sided_inlet(n_sides, area, inlet_coordinate, rotation):
         
     return vertex, side_length
 
-def initialize_inlets(domain, sim, inp, n_sides = 6, manhole_areas = [1], Q_in_0 = [1], rotation = 0):
+
+def initialize_inlets(domain, sim, inp, n_sides = 6, manhole_areas = [1],
+                       Q_in_0 = [1], rotation = -np.pi/4, zero_velocity = True, expand_polygon = True):
+    print(f'zero_velocity: {zero_velocity}')
+    print(f'expand_polygon: {expand_polygon}')
+    print(domain)
+
     if n_sides < 3:
         raise RuntimeError('A polygon should have at least 3 sides')
 
@@ -40,14 +47,13 @@ def initialize_inlets(domain, sim, inp, n_sides = 6, manhole_areas = [1], Q_in_0
     in_nodes        = [node for node in Nodes(sim) if node.is_junction()]
 
     for inlet_idx, node in enumerate(in_nodes):
-
         if isinstance(manhole_areas,list) or isinstance(manhole_areas,np.ndarray):
             inlet_area = manhole_areas[inlet_idx] 
 
         inlet_coordinates = [inp.coordinates.loc[node.nodeid].X_Coord, inp.coordinates.loc[node.nodeid].Y_Coord]
         vertices, side_length = n_sided_inlet(n_sides, inlet_area, inlet_coordinates, rotation)
         
-        inlet_operators[node.nodeid] = Inlet_operator(domain, Region(domain,polygon = vertices,expand_polygon = True), Q_in_0[inlet_idx], zero_velocity=True)
+        inlet_operators[node.nodeid] = Inlet_operator(domain, Region(domain,polygon = vertices, expand_polygon = expand_polygon), Q_in_0[inlet_idx], zero_velocity=zero_velocity)
 
         elevation_list.append(inlet_operators[node.nodeid].inlet.get_average_elevation())
         circumferences.append(n_sides*side_length)
@@ -57,4 +63,5 @@ def initialize_inlets(domain, sim, inp, n_sides = 6, manhole_areas = [1], Q_in_0
     inlet_elevations = np.array(elevation_list)
     circumferences   = np.array(circumferences)
 
-    return inlet_operators,inlet_elevations,circumferences,vertices
+    return inlet_operators, inlet_elevations, circumferences, polygons
+

@@ -27,7 +27,7 @@ def n_sided_inlet(n_sides, area, inlet_coordinate, rotation):
     return vertex, side_length
 
 def initialize_inlets(domain, sim, inp, n_sides = 6, manhole_areas = [1],
-                       Q_in_0 = [1], rotation = np.pi/4, zero_velocity = True, expand_polygon = True):
+                       Q_in_0 = [1], rotation = -np.pi/4, zero_velocity = True, expand_polygon = True):
     print(f'zero_velocity: {zero_velocity}')
     print(f'expand_polygon: {expand_polygon}')
     print(domain)

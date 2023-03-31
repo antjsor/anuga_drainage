@@ -46,7 +46,7 @@ def calculate_Q(head1D, depth2D, bed2D, length_weir, area_manhole, cw=0.67, co=0
 
     return Q
 
-def calculate_Q_v2(head1D, depth2D, bed2D, length_weir, area_manhole,inlet_volumes,dt, cw=0.67, co=0.67, eps=1e-14):
+def calculate_Q_v2(head1D, depth2D, bed2D, length_weir, area_manhole, inlet_volumes, dt, cw=0.67, co=0.67, eps=1e-14):
     """
     Routine to calculate coupling discharge between 2D and 1D models
 
@@ -81,13 +81,27 @@ def calculate_Q_v2(head1D, depth2D, bed2D, length_weir, area_manhole,inlet_volum
         # Q = np.where(np.logical_and(bed2D<=head1D, head1D<depth2D+bed2D) , np.array([min(flow*dt,volume) for flow, volume in zip (co*area_manhole*np.sqrt(2*g*(depth2D+bed2D-head1D)),inlet_volumes)]), Q)
 
         # if head1D < bed2D use Weir Equation (Reference Equation (10)):
-        Q = np.where(head1D<bed2D, np.array([min(flow,volume/dt) for flow, volume in zip (cw*length_weir*depth2D*np.sqrt(2*g*depth2D),inlet_volumes)]), Q)
+        Q = np.where(head1D<bed2D, np.array([min(flow,volume/dt) for flow, volume in zip (cw*length_weir*depth2D*np.sqrt(2*g*depth2D), inlet_volumes)]), Q)
         
         # If head1D > bed2D and  head1D < (depth2D + bed2D) use orifice equation (Equation (11))
-        Q = np.where(np.logical_and(bed2D<=head1D, head1D<depth2D+bed2D) , np.array([min(flow,volume/dt) for flow, volume in zip (co*area_manhole*np.sqrt(2*g*(depth2D+bed2D-head1D)),inlet_volumes)]), Q)
+        Q = np.where(np.logical_and(bed2D<=head1D, head1D<depth2D+bed2D) , np.array([min(flow,volume/dt) for flow, volume in zip (co*area_manhole*np.sqrt(2*g*(depth2D+bed2D-head1D)), inlet_volumes)]), Q)
 
         # Otherwise if h1d >= (depth2D + bed2D) use orifice equation (Equation (11)) surcharge
         Q = np.where(head1D>depth2D+bed2D+eps,  -co*area_manhole*np.sqrt(2*g*(head1D-depth2D-bed2D)), Q)
         #print(Q)
 
     return Q
+
+
+def node_link_connectivity(sim):
+    link2node = dict()
+    node2link = {node.nodeid: [] for node in Nodes(sim)}
+    for link in Links(sim):
+        link2node[link.linkid] = link.connections
+        for nodeid in link.connections:
+            node2link[nodeid].append(link.linkid)
+    return link2node, node2link
+
+def inlet_lateral_inflow(sim):
+    link2node, node2link = node_link_connectivity(sim)
+    

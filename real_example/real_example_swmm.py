@@ -25,18 +25,16 @@ dt           = 1.0     # yield step
 ft           = 100 # final timestep
 input_rate   = 0.102
 
-
 from pyswmm import SystemStats
-
 
 output_frequency = 1
 do_print         = True
 do_data_save     = True
 
-basename = 'model/terrain'
-inp_name = 'real_example.inp'
-outname  = 'real_example_swmm'
-meshname = 'model/terrain.tsh'
+basename = 'model/terrain' # Terræn fil
+inp_name = 'real_example.inp' # SWMM fil
+outname  = 'real_example_swmm' # Navn på sww-fil. Genereret
+meshname = 'model/terrain.tsh' # Genereret 
 
 #------------------------------------------------------------------------------
 # CREATING MESH
@@ -47,7 +45,7 @@ riverWall_csv_files = glob.glob('model/wall/*.csv') # Make a list of the csv fil
 
 CatchmentDictionary = {'model/kerb/kerb1.csv':0.01, 'model/kerb/kerb2.csv':0.01}
     
-bounding_polygon = anuga.read_polygon('model/domain.csv')
+bounding_polygon = anuga.read_polygon('model/domain.csv') # Overvej at slette sidste linje, der er gentagelse af første randpunkt fra QGIS
 interior_regions = anuga.read_polygon_dir(CatchmentDictionary, 'model/kerb')
 
 
@@ -74,8 +72,8 @@ domain.set_name(outname)
 #------------------------------------------------------------------------------
 
 domain.set_quantity('friction', 0.025)
-domain.set_quantity('stage', 0)
-domain.set_quantity('elevation', filename=basename+'.csv', use_cache=False, verbose=False, alpha=0.99)
+domain.set_quantity('stage', 0) ### Vandhøjde ved start
+domain.set_quantity('elevation', filename=basename+'.csv', use_cache=False, verbose=False, alpha=0.99) # Hent terræn raster
 
 #------------------------------------------------------------------------------
 # SETUP BOUNDARY CONDITIONS

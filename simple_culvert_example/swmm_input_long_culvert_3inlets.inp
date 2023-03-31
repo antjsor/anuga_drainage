@@ -25,12 +25,12 @@ DRY_DAYS             0
 REPORT_STEP          00:01:00
 WET_STEP             00:05:00
 DRY_STEP             01:00:00
-ROUTING_STEP         0.2
+ROUTING_STEP         1.0
 RULE_STEP            00:00:00
 
 INERTIAL_DAMPING     NONE
 NORMAL_FLOW_LIMITED  BOTH
-FORCE_MAIN_EQUATION  D-W
+FORCE_MAIN_EQUATION  H-W
 VARIABLE_STEP        0.0
 LENGTHENING_STEP     0
 MIN_SURFAREA         1.167
@@ -79,7 +79,7 @@ Outpipe          CIRCULAR     0.1              0          0          0          
 [INFLOWS]
 ;;Node           Constituent      Time Series      Type     Mfactor  Sfactor  Baseline Pattern
 ;;-------------- ---------------- ---------------- -------- -------- -------- -------- --------
-Inlet1           FLOW             ""               FLOW     1.0      1.0      0.1
+Inlet1           FLOW             ""               FLOW     1.0      1.0      0.5
 Inlet2           FLOW             ""               FLOW     1.0      1.0      0.0    
 Inlet3           FLOW             ""               FLOW     1.0      1.0      0.0        
 Outlet           FLOW             ""               FLOW     1.0      1.0      0.0      

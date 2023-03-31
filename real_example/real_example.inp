@@ -11,32 +11,34 @@ MIN_SLOPE            0
 ALLOW_PONDING        NO
 SKIP_STEADY_STATE    NO
 
-START_DATE           09/08/2022
+IGNORE_RAINFALL      YES
+IGNORE_QUALITY       YES
+START_DATE           01/01/1970
 START_TIME           00:00:00
-REPORT_START_DATE    09/08/2022
+REPORT_START_DATE    01/01/1970
 REPORT_START_TIME    00:00:00
-END_DATE             09/08/2022
-END_TIME             06:00:01
+END_DATE             01/01/1970
+END_TIME             00:20:00
 SWEEP_START          01/01
 SWEEP_END            12/31
 DRY_DAYS             0
-REPORT_STEP          00:00:01
+REPORT_STEP          00:01:00
 WET_STEP             00:05:00
 DRY_STEP             01:00:00
-ROUTING_STEP         0:00:01 
+ROUTING_STEP         1.0
 RULE_STEP            00:00:00
 
 INERTIAL_DAMPING     NONE
 NORMAL_FLOW_LIMITED  BOTH
-FORCE_MAIN_EQUATION  H-W
-VARIABLE_STEP        0.75
+FORCE_MAIN_EQUATION  D-W
+VARIABLE_STEP        0.0
 LENGTHENING_STEP     0
 MIN_SURFAREA         1.167
 MAX_TRIALS           8
 HEAD_TOLERANCE       0.0015
 SYS_FLOW_TOL         5
 LAT_FLOW_TOL         5
-MINIMUM_STEP         0.5
+MINIMUM_STEP         1
 THREADS              1
 
 [EVAPORATION]
@@ -48,10 +50,10 @@ DRY_ONLY         NO
 [JUNCTIONS]
 ;;Name           Elevation  MaxDepth   InitDepth  SurDepth   Aponded   
 ;;-------------- ---------- ---------- ---------- ---------- ----------
-Inlet_1          37.5       0          0          0          0.19635   
-Inlet_2          36.4       0          0          0          0.19635   
-Inlet_3          34.5       0          0          0          0.19635   
-Inlet_4          33.4       0          0          0          0.19635   
+Inlet_1          37.5       2          0          0.15          1   
+Inlet_2          36.4       2          0          0.15          1   
+Inlet_3          34.5       2          0          0.15          1   
+Inlet_4          33.4       2          0          0.15          1   
 
 [OUTFALLS]
 ;;Name           Elevation  Type       Stage Data       Gated    Route To        

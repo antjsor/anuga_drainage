@@ -64,7 +64,7 @@ def calculate_Q_v2(head1D, depth2D, bed2D, length_weir, area_manhole, inlet_volu
     area_manhole is the manhole area [m2] 
     co is the orifice discharge coefficient.
 
-    Modified to never take out more water than exists above the node.
+    Modified to never take out more water than exists on terrain above the node.
 
     """
 
@@ -93,15 +93,15 @@ def calculate_Q_v2(head1D, depth2D, bed2D, length_weir, area_manhole, inlet_volu
     return Q
 
 
-def node_link_connectivity(sim):
-    link2node = dict()
-    node2link = {node.nodeid: [] for node in Nodes(sim)}
-    for link in Links(sim):
-        link2node[link.linkid] = link.connections
-        for nodeid in link.connections:
-            node2link[nodeid].append(link.linkid)
-    return link2node, node2link
+# def node_link_connectivity(sim):
+#     link2node = dict()
+#     node2link = {node.nodeid: [] for node in Nodes(sim)}
+#     for link in Links(sim):
+#         link2node[link.linkid] = link.connections
+#         for nodeid in link.connections:
+#             node2link[nodeid].append(link.linkid)
+#     return link2node, node2link
 
-def inlet_lateral_inflow(sim):
-    link2node, node2link = node_link_connectivity(sim)
+# def inlet_lateral_inflow(sim):
+#     link2node, node2link = node_link_connectivity(sim)
     

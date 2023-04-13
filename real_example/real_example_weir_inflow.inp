@@ -16,7 +16,7 @@ START_TIME           00:00:00
 REPORT_START_DATE    09/08/2022
 REPORT_START_TIME    00:00:00
 END_DATE             09/08/2022
-END_TIME             06:00:01
+END_TIME             01:00:01
 SWEEP_START          01/01
 SWEEP_END            12/31
 DRY_DAYS             0
@@ -48,10 +48,10 @@ DRY_ONLY         NO
 [JUNCTIONS]
 ;;Name           Elevation  MaxDepth   InitDepth  SurDepth   Aponded   
 ;;-------------- ---------- ---------- ---------- ---------- ----------
-Inlet_1          37.5       0          0          0          0.19635   
-Inlet_2          36.4       0          0          0          0.19635   
-Inlet_3          34.5       0          0          0          0.19635   
-Inlet_4          33.4       0          0          0          0.19635   
+Inlet_1          37.5       100          0          0          0.19635   
+Inlet_2          36.4       100          0          0          0.19635   
+Inlet_3          34.5       100          0          0          0.19635   
+Inlet_4          33.4       100          0          0          0.19635   
 
 [OUTFALLS]
 ;;Name           Elevation  Type       Stage Data       Gated    Route To        
@@ -70,13 +70,13 @@ Conduit_2        Inlet_2          Inlet_3          10.251     0.013      0      
 Conduit_3        Inlet_3          Inlet_4          14.295     0.013      0          0          0          0         
 Conduit_4        Inlet_4          Outfall_1        24         0.013      0          0          0          0         
 
-[ORIFICES]
-;;Name           From Node        To Node          Type         Offset     Qcoeff     Gated    CloseTime 
-;;-------------- ---------------- ---------------- ------------ ---------- ---------- -------- ----------
-Orifice1         Inlet_1          Ori_out1         BOTTOM       10          0.65       YES      0         
-Orifice2         Inlet_2          Ori_out2         BOTTOM       10          0.65       YES      0         
-Orifice3         Inlet_3          Ori_out3         BOTTOM       10          0.65       YES      0         
-Orifice4         Inlet_4          Ori_out4         BOTTOM       10          0.65       YES      0         
+[WEIRS]
+;;Name           From Node        To Node          Type         CrestHt    Qcoeff     Gated    EndCon   EndCoeff   Surcharge  RoadWidth  RoadSurf   Coeff. Curve
+;;-------------- ---------------- ---------------- ------------ ---------- ---------- -------- -------- ---------- ---------- ---------- ---------- ----------------
+Weir_1           Inlet_1          Ori_out1         TRANSVERSE   0          2.66       NO       0        0          NO       
+Weir_2           Inlet_2          Ori_out2         TRANSVERSE   0          2.66       NO       0        0          NO       
+Weir_3           Inlet_3          Ori_out3         TRANSVERSE   0          2.66       NO       0        0          NO       
+Weir_4           Inlet_4          Ori_out4         TRANSVERSE   0          2.66       NO       0        0          NO       
 
 [XSECTIONS]
 ;;Link           Shape        Geom1            Geom2      Geom3      Geom4      Barrels    Culvert   
@@ -85,18 +85,15 @@ Conduit_1        CIRCULAR     0.375            0          0          0          
 Conduit_2        CIRCULAR     0.375            0          0          0          1                    
 Conduit_3        CIRCULAR     0.375            0          0          0          1                    
 Conduit_4        CIRCULAR     0.45             0          0          0          1                    
-Orifice1         CIRCULAR     1                0          0          0
-Orifice2         CIRCULAR     1                0          0          0
-Orifice3         CIRCULAR     1                0          0          0
-Orifice4         CIRCULAR     1                0          0          0
+Weir_1           RECT_OPEN    1                1          0          0         
+Weir_2           RECT_OPEN    1                1          0          0         
+Weir_3           RECT_OPEN    1                1          0          0         
+Weir_4           RECT_OPEN    1                1          0          0         
 
 [INFLOWS]
 ;;Node           Constituent      Time Series      Type     Mfactor  Sfactor  Baseline Pattern
 ;;-------------- ---------------- ---------------- -------- -------- -------- -------- --------
-Inlet_1          FLOW             ""               FLOW     1.0      1.0      0.5     
-Inlet_2          FLOW             ""               FLOW     1.0      1.0      0.0     
-Inlet_3          FLOW             ""               FLOW     1.0      1.0      0.0     
-Inlet_4          FLOW             ""               FLOW     1.0      1.0      0.0     
+Inlet_1          FLOW             ""               FLOW     1.0      1.0      1       
 
 [REPORT]
 ;;Reporting Options
